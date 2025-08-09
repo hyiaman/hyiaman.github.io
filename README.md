@@ -123,7 +123,27 @@ To customize this portfolio for your own use:
 - **SEO Friendly**: Proper meta tags and semantic HTML structure
 - **Fast Loading**: Minimal external dependencies and optimized assets
 
-## 📄 License
+## � Contact Form Setup
+
+To enable the contact form functionality:
+
+1. **Create EmailJS Account**: Sign up at [EmailJS](https://www.emailjs.com/)
+2. **Set up Service**: Configure your email service (Gmail, Outlook, etc.)
+3. **Create Template**: Set up an email template in EmailJS
+4. **Configure Credentials**: 
+   - Copy `config.template.js` to `config.js`
+   - Add your EmailJS credentials:
+   ```javascript
+   window.emailConfig = {
+       publicKey: 'your_public_key',
+       serviceId: 'your_service_id', 
+       templateId: 'your_template_id'
+   };
+   ```
+
+**⚠️ Security Note**: Never commit `config.js` to version control as it contains API credentials. The file is already added to `.gitignore`.
+
+## �📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
