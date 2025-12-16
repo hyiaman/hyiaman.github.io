@@ -186,12 +186,211 @@
         .social-footer a:hover { color: var(--accent); transform: translateY(-3px); }
         .copyright { margin-top: 2rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
 
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .container { padding: 4rem 7%; }
+            .hero { padding: 0 7%; }
+            .section-title::after { width: 150px; }
+            .stack-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            .project-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero { padding: 0 5%; }
-            .container { padding: 4rem 5%; }
-            .section-title::after { width: 100px; }
+            nav {
+                padding: 1rem 5%;
+            }
+
+            .logo {
+                font-size: 1rem;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                flex-direction: column;
+                background: var(--light-bg);
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                padding: 5rem 2rem;
+                transition: right 0.3s ease-in-out;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+                margin: 1rem 0;
+            }
+
+            .btn-nav {
+                margin-top: 1rem;
+            }
+
+            .hero {
+                padding: 0 5%;
+                min-height: 90vh;
+            }
+
+            .hero-content {
+                padding-top: 2rem;
+            }
+
+            .mono-text {
+                font-size: 0.9rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .hero-btns {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-btns a {
+                text-align: center;
+                width: 100%;
+            }
+
+            .container {
+                padding: 3rem 5%;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .section-title span {
+                font-size: 1rem;
+            }
+
+            .section-title::after {
+                width: 80px;
+                margin-left: 15px;
+            }
+
+            .stack-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stack-category {
+                padding: 1.5rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                padding: 1.5rem;
+            }
+
+            .card-header {
+                margin-bottom: 1rem;
+            }
+
+            .open-folder {
+                font-size: 2rem;
+            }
+
+            .card-links a {
+                font-size: 1rem;
+            }
+
+            .project-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .center-text {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+
+            .big-title {
+                font-size: clamp(32px, 8vw, 50px);
+            }
+
+            .social-footer {
+                margin-top: 2rem;
+                font-size: 1.3rem;
+                gap: 1.5rem;
+            }
+
+            .copyright {
+                font-size: 0.75rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 4%;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 0 4%;
+            }
+
+            .container {
+                padding: 2.5rem 4%;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .section-title::after {
+                width: 60px;
+            }
+
+            .tags {
+                gap: 0.6rem;
+            }
+
+            .tags span {
+                font-size: 0.8rem;
+            }
+
+            .card-tech {
+                gap: 0.8rem;
+                font-size: 0.7rem;
+            }
+
+            .btn, .btn-outline, .btn-nav {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -199,6 +398,9 @@
 
     <nav>
         <div class="logo">&lt;Mark Finley/&gt;</div>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+            <i class="fas fa-bars"></i>
+        </button>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#stack">Proficiency</a></li>
@@ -337,6 +539,45 @@
         </div>
         <p class="copyright">Built with <span class="highlight">vanilla HTML5,CSS3 and JavaScript</span>,<br> Logic & Coffee.</p>
     </section>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Toggle between hamburger and close icon
+            if (navLinks.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when clicking on a link
+        const navItems = document.querySelectorAll('.nav-links a');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        });
+    </script>
 
 </body>
 </html>
